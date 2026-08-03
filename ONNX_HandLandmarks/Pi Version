@@ -58,7 +58,6 @@ keypoint_classifier = KeyPointClassifier()
 with open("model/keypoint_classifier/keypoint_classifier_label.csv") as f:
         labels = [row[0] for row in csv.reader(f)]
 
-cap = cv.VideoCapture(0)
 width = 640
 height = 480
 picam2 = Picamera2()
