@@ -26,16 +26,8 @@ X_OFFSET = (NATIVE_W - W) // 2
 
 
 def events_to_frame_cropped(events):
-    """
-    events: numpy structured array with fields ('x','y','p','t'), as
-    yielded by EventsIterator. Crops to the centered 128x128 region and
-    bins into a [2, H, W] frame.
- 
-    VERIFY ON HARDWARE: Prophesee's polarity convention -- some Metavision
-    versions/sensors use {0, 1}, others use {-1, 1}. If accuracy looks
-    wrong once you have real data, this is the first thing to check:
-    print np.unique(events['p']) and adjust the mapping below.
-    """
+    # ('x','y','p','t')
+
     x = events['x'].astype(np.int64) - X_OFFSET
     y = events['y'].astype(np.int64) - Y_OFFSET
     p = events['p'].astype(np.int64)
@@ -53,15 +45,6 @@ def events_to_frame_cropped(events):
     return frame
 
 def genx320_camera(events_per_frame=EVENTS_PER_FRAME):
-    """
-    Opens the live GenX320 camera and yields one raw events buffer per
-    call, each containing exactly `events_per_frame` events (SDK handles
-    the count-based slicing internally).
- 
-    VERIFY ON HARDWARE: passing "" as input_path is documented to open a
-    live camera automatically; confirm this actually finds your GenX320
-    over its CSI-2 connection and doesn't need a serial number.
-    """
     mv_iterator = EventsIterator("", mode="n_events", n_events=events_per_frame)
     height, width = mv_iterator.get_size()
     print(f'camera opened, reported resolution: {width}x{height}')
