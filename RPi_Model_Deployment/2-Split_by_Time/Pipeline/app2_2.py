@@ -32,10 +32,10 @@ MAX_WINDOW_WAIT_US = 700_000
 
 NATIVE_H, NATIVE_W = 320, 320
 
-def events_to_frame_cropped(events, target_events=30_000, rng=np.random.default_rng())::
+def events_to_frame_cropped(events, target_events=30_000, rng=np.random.default_rng()):
     #('x','y','p','t')
 
-  if events.size > target_events:
+    if events.size > target_events:
         idx = rng.choice(events.size, size=target_events, replace=False)
         events = events[idx]
 
