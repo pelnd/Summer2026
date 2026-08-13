@@ -1,4 +1,4 @@
-# improved version
+# taken directly from pi, working version
 
 import numpy as np
 import torch
