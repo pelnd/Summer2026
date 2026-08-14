@@ -12,7 +12,7 @@ NATIVE_H, NATIVE_W = 320, 320
 OUT_DIR = './recordings'
 
 CLASS_NAMES = [
-    'hand clap', 'right hand wave', 'ohter gestures' ,'left hand wave',
+    'hand clap', 'right hand wave', 'other gestures', 'left hand wave',
     'right arm clockwise', 'right arm counter clockwise',
     'left arm clockwise', 'left arm counter clockwise',
     'arm roll', 'air drums', 'air guitar',
@@ -29,6 +29,10 @@ DISPLAY_N_EVENTS = 5000
 DISPLAY_MAX_WAIT_US = 100_000
 
 COUNTDOWN_SECONDS = 2.0
+
+# trim this much off the END of every saved clip, to cut out the
+# "reaching for the keyboard to stop recording" motion
+TRIM_TAIL_US = 2_000_000
 
 
 def events_to_display_frame(events):
@@ -55,6 +59,14 @@ def next_clip_index(folder):
 def save_clip(events_list, folder, clip_idx):
     os.makedirs(folder, exist_ok=True)
     all_events = np.concatenate(events_list)
+
+    # drop the tail end of the clip to cut out the "reaching for the
+    # keyboard to hit stop" motion -- keep only events up to
+    # (last_timestamp - TRIM_TAIL_US)
+    if all_events.size > 0:
+        cutoff = all_events['t'].max() - TRIM_TAIL_US
+        all_events = all_events[all_events['t'] <= cutoff]
+
     out = np.zeros(len(all_events), dtype=[('t', '<i8'), ('x', '<u2'), ('y', '<u2'), ('p', 'u1')])
     out['t'] = all_events['t']
     out['x'] = all_events['x']
