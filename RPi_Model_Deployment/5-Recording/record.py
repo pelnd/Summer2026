@@ -12,10 +12,10 @@ NATIVE_H, NATIVE_W = 320, 320
 OUT_DIR = './recordings'
 
 CLASS_NAMES = [
-    'hand clap', 'right hand wave', 'left hand wave',
+    'hand clap', 'right hand wave', 'ohter gestures' ,'left hand wave',
     'right arm clockwise', 'right arm counter clockwise',
     'left arm clockwise', 'left arm counter clockwise',
-    'arm roll', 'air drums', 'air guitar', 'other gestures',
+    'arm roll', 'air drums', 'air guitar',
 ]
 
 # match whatever bias values you tuned to hit ~0.06 resting occupancy --
