@@ -3,10 +3,9 @@ MODEL COMPLEXITY
 ============================================================
 Parameters:  356,846
 Model size:  1.37 MB (on disk)
-The directory [D:\VsCode Projects\Staj 2026\spiking jelly\DVS  Gesture dataset\frames_number_8_split_by_number] already exists.
 
 ============================================================
-ACCURACY
+ACCURACY (streaming pipeline)
 ============================================================
 Overall accuracy: 0.6354  (183/288)
 
@@ -40,9 +39,18 @@ true  9 |    1    0    0    0    0    1    0    0   13    8    1
 true 10 |    1    0    1    0    0    1    1    2    5    1   12
 
 ============================================================
-INFERENCE TIME (single sample, cpu)
+LATENCY (single sample, cpu)
 ============================================================
-Mean:   121.97 ms
-Median: 76.58 ms
-Min:    18.16 ms
-Max:    772.83 ms
+Net forward pass (same measurement as offline eval):
+  Mean:   145.48 ms
+  Median: 95.99 ms
+  Min:    30.11 ms
+  Max:    1339.26 ms
+
+Frame construction (events_to_frame loop, extra cost the offline eval doesn't pay):
+  Mean:   704.33 ms
+  Median: 612.64 ms
+  Min:    98.78 ms
+  Max:    3067.31 ms
+
+Combined mean (frame construction + inference): 849.81 ms per prediction
