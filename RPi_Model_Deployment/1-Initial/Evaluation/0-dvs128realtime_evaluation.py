@@ -34,10 +34,9 @@ CHANNELS = 32
 NUM_CLASSES = 11
 
 CLASS_NAMES = [
-    'hand clap', 'right hand wave', 'left hand wave',
-    'right arm clockwise', 'right arm counter clockwise',
-    'left arm clockwise', 'left arm counter clockwise',
-    'arm roll', 'air drums', 'air guitar', 'other gestures',
+    "hand_clap", "right_hand_wave", "other_gestures", "left_hand_wave",
+    "right_arm_cw", "right_arm_ccw", "left_arm_cw", "left_arm_ccw",
+    "arm_rolls", "air_drums", "air_guitar",
 ]
 
 
