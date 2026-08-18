@@ -17,10 +17,11 @@ NUM_CLASSES = 11
 H, W = 128, 128                     
 MODEL_PATH = './checkpoint2.pth'
 CLASS_NAMES = [
-    'hand clap', 'right hand wave', 'left hand wave',
-    'right arm clockwise', 'right arm counter clockwise',
-    'left arm clockwise', 'left arm counter clockwise',
-    'arm roll', 'air drums', 'air guitar', 'other gestures',
+    'hand clap', 'right hand wave', 'other gestures',
+    'left hand wave', 'right arm clockwise', 
+    'right arm counter clockwise', 'left arm clockwise', 
+    'left arm counter clockwise', 'arm rolls',
+    'air drums', 'air guitar', 
 ]
 
 
