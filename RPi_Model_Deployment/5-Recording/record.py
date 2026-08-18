@@ -20,8 +20,8 @@ CLASS_NAMES = [
 
 # match whatever bias values you tuned to hit ~0.06 resting occupancy --
 # these reset on power-cycle, re-check with a blank-scene pilot before recording
-BIAS_DIFF_ON = 20
-BIAS_DIFF_OFF = 20
+BIAS_DIFF_ON = -80
+BIAS_DIFF_OFF = -80
 
 # small window just for live display/occupancy feedback, NOT the training window --
 # raw (t,x,y,p) events are saved for every event regardless of this
