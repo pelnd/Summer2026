@@ -1,4 +1,5 @@
 # laptop, v3
+# this is v3, change run_name for other runs
 
 import os
 import time
