@@ -55,6 +55,7 @@ def genx320_camera(events_per_frame=EVENTS_PER_FRAME):
     biases = device.get_i_ll_biases()
     biases.set("bias_diff_on", 25)
     biases.set("bias_diff_off", 28)
+    print(f'bias readback: on={biases.get("bias_diff_on")}  off={biases.get("bias_diff_off")}')
 
     height, width = mv_iterator.get_size()
     print(f'camera opened, reported resolution: {width}x{height}')
