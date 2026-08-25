@@ -41,6 +41,12 @@ IDLE_TIMEOUT_S = 2.0
 
 NATIVE_H, NATIVE_W = 320, 320
 
+# BGR (OpenCV order) -- blue-family palette instead of red/green, since red+green
+# overlap combines into a harsh yellow wherever both polarities fire in the same
+# window. Blending two blues stays in-family instead of clashing.
+POS_COLOR = np.array([250, 206, 135], dtype=np.float32)   # light blue, positive polarity
+NEG_COLOR = np.array([112, 25, 25], dtype=np.float32)      # dark blue, negative polarity
+
 def events_to_frame_cropped(events):
     #('x','y','p','t')
 
@@ -118,9 +124,12 @@ def main():
         display_events = np.concatenate(accum)
         disp_frame = events_to_frame_cropped(display_events)
 
-        event_display = np.zeros((H, W, 3), dtype=np.uint8)
-        event_display[:, :, 1] = np.clip(disp_frame[1] * 20, 0, 255)   # positive polarity -> green
-        event_display[:, :, 2] = np.clip(disp_frame[0] * 20, 0, 255)   # negative polarity -> red
+        pos_mag = np.clip(disp_frame[1] * 20, 0, 255)   # positive polarity intensity, 0..255
+        neg_mag = np.clip(disp_frame[0] * 20, 0, 255)   # negative polarity intensity, 0..255
+
+        event_display = (pos_mag[..., None] / 255.0 * POS_COLOR
+                          + neg_mag[..., None] / 255.0 * NEG_COLOR)
+        event_display = np.clip(event_display, 0, 255).astype(np.uint8)
         event_display = cv2.resize(event_display, (512, 512))
 
         cv2.putText(
