@@ -27,7 +27,7 @@ from spikingjelly.activation_based.model import parametric_lif_net
 DEVICE = 'cpu'
 
 RECORDINGS_DIR = '/home/pelin/Projects/camera_testing/record/recordings'
-CHECKPOINT_PATH = './model_checkpoint.pth'
+CHECKPOINT_PATH = './checkpoint_latest.pth'
 TEST_CLIPS_FILE = './test_clips.txt'
 
 RUN_ON = 'heldout'   # 'heldout' (sanity check + latency, 33 clips) or 'all' (latency only, ~277 clips)
