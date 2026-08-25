@@ -47,6 +47,12 @@ NATIVE_H, NATIVE_W = 320, 320
 POS_COLOR = np.array([250, 206, 135], dtype=np.float32)   # light blue, positive polarity
 NEG_COLOR = np.array([112, 25, 25], dtype=np.float32)      # dark blue, negative polarity
 
+# display persistence -- raw per-tick batches have noisy, varying event counts (motion
+# isn't perfectly smooth), which reads as flicker at a fast refresh rate. A decaying
+# buffer instead of raw instantaneous batches smooths that out. Both retune visually.
+DISPLAY_DECAY = 0.85    # fraction of previous brightness kept each tick
+DISPLAY_SCALE = 60.0    # per-event brightness contribution added each tick
+
 def events_to_frame_cropped(events):
     #('x','y','p','t')
 
@@ -113,6 +119,8 @@ def main():
     accum_count = 0
     accum_deadline = None   # wall-clock deadline (time.perf_counter()) for the current partial frame
 
+    disp_accum = np.zeros((2, H, W), dtype=np.float32)   # persistent display buffer, independent of accum
+
     for events in genx320_camera():
         if accum_deadline is None:
             accum_deadline = time.perf_counter() + IDLE_TIMEOUT_S
@@ -121,16 +129,14 @@ def main():
         accum_count += events.size
 
         # --- display: redraws every small batch, independent of the model's window size.
-        # shows only THIS tick's events (not the running accum toward EVENTS_PER_FRAME) --
-        # using the growing accumulation instead made the image visibly snap back to
-        # near-empty every time a model frame completed, looking like a flicker/strobe.
-        disp_frame = events_to_frame_cropped(events)
+        # decaying persistence buffer instead of raw per-tick counts -- smooths out
+        # tick-to-tick noise so brief gaps/bursts fade in and out instead of flickering.
+        new_frame = events_to_frame_cropped(events)   # raw per-pixel event counts, this tick only
+        disp_accum = disp_accum * DISPLAY_DECAY + new_frame * DISPLAY_SCALE
+        np.clip(disp_accum, 0, 255, out=disp_accum)
 
-        # scale bumped up ~10x vs. the old single-batch display (was sized up to
-        # EVENTS_PER_FRAME=50000 per tick, now DISPLAY_N_EVENTS=5000) -- retune visually
-        # if it looks too dim/bright.
-        pos_mag = np.clip(disp_frame[1] * 200, 0, 255)   # positive polarity intensity, 0..255
-        neg_mag = np.clip(disp_frame[0] * 200, 0, 255)   # negative polarity intensity, 0..255
+        pos_mag = disp_accum[1]   # positive polarity intensity, 0..255
+        neg_mag = disp_accum[0]   # negative polarity intensity, 0..255
 
         event_display = (pos_mag[..., None] / 255.0 * POS_COLOR
                           + neg_mag[..., None] / 255.0 * NEG_COLOR)
