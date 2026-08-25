@@ -120,12 +120,17 @@ def main():
         accum.append(events)
         accum_count += events.size
 
-        # --- display: redraws every small batch, independent of the model's window size ---
-        display_events = np.concatenate(accum)
-        disp_frame = events_to_frame_cropped(display_events)
+        # --- display: redraws every small batch, independent of the model's window size.
+        # shows only THIS tick's events (not the running accum toward EVENTS_PER_FRAME) --
+        # using the growing accumulation instead made the image visibly snap back to
+        # near-empty every time a model frame completed, looking like a flicker/strobe.
+        disp_frame = events_to_frame_cropped(events)
 
-        pos_mag = np.clip(disp_frame[1] * 20, 0, 255)   # positive polarity intensity, 0..255
-        neg_mag = np.clip(disp_frame[0] * 20, 0, 255)   # negative polarity intensity, 0..255
+        # scale bumped up ~10x vs. the old single-batch display (was sized up to
+        # EVENTS_PER_FRAME=50000 per tick, now DISPLAY_N_EVENTS=5000) -- retune visually
+        # if it looks too dim/bright.
+        pos_mag = np.clip(disp_frame[1] * 200, 0, 255)   # positive polarity intensity, 0..255
+        neg_mag = np.clip(disp_frame[0] * 200, 0, 255)   # negative polarity intensity, 0..255
 
         event_display = (pos_mag[..., None] / 255.0 * POS_COLOR
                           + neg_mag[..., None] / 255.0 * NEG_COLOR)
