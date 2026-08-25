@@ -1,32 +1,16 @@
-py
 device=cpu  torch CPU threads=4  run_on=heldout
 loaded ./checkpoint_latest.pth (dict-wrapped checkpoint, epoch=15, train_acc=0.93359375)
-warning: ./test_clips.txt not found, treating all clips as non-held-out
-0 held-out clips listed in ./test_clips.txt
-clips used: 0, clips skipped (not enough events for one window): 0
-0 windows to measure (heldout)
+33 held-out clips listed in ./test_clips.txt
+clips used: 33, clips skipped (not enough events for one window): 0
+156 windows to measure (heldout)
+  window 0/156  latency=450.55ms
+  window 50/156  latency=387.22ms
+  window 100/156  latency=388.52ms
+  window 150/156  latency=385.18ms
 
 === heldout results, device=cpu ===
-windows measured: 0
-/home/pelin/Projects/camera_testing/pvenv/lib/python3.11/site-packages/numpy/core/fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
-  return _methods._mean(a, axis=axis, dtype=dtype,
-/home/pelin/Projects/camera_testing/pvenv/lib/python3.11/site-packages/numpy/core/_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
-  ret = ret.dtype.type(ret / rcount)
-/home/pelin/Projects/camera_testing/finetuned/latency.py:200: RuntimeWarning: Mean of empty slice.
-  print(f'latency: median={np.median(lat):.2f}ms  mean={lat.mean():.2f}ms  '
-/home/pelin/Projects/camera_testing/pvenv/lib/python3.11/site-packages/numpy/core/_methods.py:206: RuntimeWarning: Degrees of freedom <= 0 for slice
-  ret = _var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-/home/pelin/Projects/camera_testing/pvenv/lib/python3.11/site-packages/numpy/core/_methods.py:163: RuntimeWarning: invalid value encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean,
-/home/pelin/Projects/camera_testing/pvenv/lib/python3.11/site-packages/numpy/core/_methods.py:198: RuntimeWarning: invalid value encountered in scalar divide
-  ret = ret.dtype.type(ret / rcount)
-Traceback (most recent call last):
-  File "/home/pelin/Projects/camera_testing/finetuned/latency.py", line 217, in <module>
-    main()
-  File "/home/pelin/Projects/camera_testing/finetuned/latency.py", line 201, in main
-    f'std={lat.std():.2f}ms  min={lat.min():.2f}ms  max={lat.max():.2f}ms')
-                                  ^^^^^^^^^
-  File "/home/pelin/Projects/camera_testing/pvenv/lib/python3.11/site-packages/numpy/core/_methods.py", line 45, in _amin
-    return umr_minimum(a, axis, None, out, keepdims, initial, where)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: zero-size array to reduction operation minimum which has no identity
+windows measured: 156
+latency: median=384.15ms  mean=385.54ms  std=6.83ms  min=378.16ms  max=450.55ms
+sanity-check accuracy: 140/156 = 89.7%  (compare against 89.7% / 140/156 from the GPU eval)
+per-window log saved to ./latency_heldout_pi.csv
+
