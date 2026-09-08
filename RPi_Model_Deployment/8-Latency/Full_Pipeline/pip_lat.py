@@ -25,7 +25,7 @@ T = 8
 CHANNELS = 64
 NUM_CLASSES = 11
 H, W = 128, 128
-MODEL_PATH = './checkpoint_latest.pth'
+MODEL_PATH = './model3.pth'
 CLASS_NAMES = [
     'hand clap', 'right hand wave', 'other gestures',
     'left hand wave', 'right arm clockwise',
