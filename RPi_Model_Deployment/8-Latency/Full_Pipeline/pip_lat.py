@@ -40,7 +40,7 @@ DISPLAY_MAX_WAIT_US = 100_000
 
 NATIVE_H, NATIVE_W = 320, 320
 
-N_PREDICTIONS = 30              # how many predictions to collect before stopping -- edit as needed
+N_PREDICTIONS = 16              # how many predictions to collect before stopping -- edit as needed
 OUT_CSV = './pipeline_latency_pi.csv'
 
 
