@@ -24,7 +24,7 @@ CLIP_SET = 'all'       # 'all' (all clips, base model only) or 'heldout' (33 hel
 N_EVENTS = 50_000      # 50_000 or 10_000
 EXCLUDE_CLIPS = {
     # fill in for the "heldout 50k excl. ambiguous" run only:
-    # r'Projects\Staj 2026\spiking jelly\finetuning_dataset\recordings\C_class01_right_hand_wave\clip_003.npy',
+    # r'D:\VsCode Projects\Staj 2026\spiking jelly\finetuning_dataset\recordings\C_class01_right_hand_wave\clip_002.npy'
 }
 
 # ============================================================
