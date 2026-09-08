@@ -1,0 +1,36 @@
+device=cpu  torch CPU threads=4
+loaded weights from ./checkpoint_latest.pth
+collecting 20 predictions -- keep gesturing continuously for a clean measurement
+[HAL][INFO] Success setting bias_diff_on Control value to 25 
+[HAL][INFO] Success setting bias_diff_off Control value to 28 
+[HAL][INFO] bias_diff_on Control value: 25 
+[HAL][INFO] bias_diff_off Control value: 28 
+bias readback: on=25  off=28
+camera opened, reported resolution: 320x320
+first prediction: right hand wave (no latency yet -- nothing to measure against)
+prediction 1/20: right hand wave  (latency since last prediction: 1750ms)
+prediction 2/20: arm rolls  (latency since last prediction: 1403ms)
+prediction 3/20: arm rolls  (latency since last prediction: 1214ms)
+prediction 4/20: left hand wave  (latency since last prediction: 1830ms)
+prediction 5/20: left hand wave  (latency since last prediction: 1675ms)
+prediction 6/20: right arm counter clockwise  (latency since last prediction: 1437ms)
+prediction 7/20: right arm counter clockwise  (latency since last prediction: 1662ms)
+prediction 8/20: right arm counter clockwise  (latency since last prediction: 1375ms)
+prediction 9/20: right arm clockwise  (latency since last prediction: 1316ms)
+prediction 10/20: left arm counter clockwise  (latency since last prediction: 1530ms)
+prediction 11/20: left arm clockwise  (latency since last prediction: 1758ms)
+prediction 12/20: left arm clockwise  (latency since last prediction: 1748ms)
+prediction 13/20: left arm clockwise  (latency since last prediction: 1530ms)
+prediction 14/20: air guitar  (latency since last prediction: 1918ms)
+prediction 15/20: air guitar  (latency since last prediction: 2418ms)
+prediction 16/20: air drums  (latency since last prediction: 1736ms)
+prediction 17/20: air drums  (latency since last prediction: 1627ms)
+prediction 18/20: hand clap  (latency since last prediction: 1908ms)
+prediction 19/20: hand clap  (latency since last prediction: 1844ms)
+prediction 20/20: other gestures  (latency since last prediction: 1917ms)
+
+=== end-to-end pipeline latency (prediction-to-prediction), device=cpu ===
+predictions measured: 20
+latency: median=1705ms  mean=1680ms  std=265ms  min=1214ms  max=2418ms
+(for reference: pure inference-only latency measured separately at ~356-384ms/window -- the gap between that and this number is event-accumulation time)
+per-prediction log saved to ./pipeline_latency_pi.csv
